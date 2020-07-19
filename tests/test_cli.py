@@ -387,8 +387,6 @@ def test_ffmpeg_process_res_should_download(_ffmpeg_downloader, youtube):
 def test_ffmpeg_process_res_none_should_not_download(
     _ffmpeg_downloader, youtube
 ):
-    # Given
-    target = "/target"
     streams = MagicMock()
     youtube.streams = streams
     streams.filter.return_value.first.return_value = None
@@ -396,6 +394,8 @@ def test_ffmpeg_process_res_none_should_not_download(
     streams.get_audio_only.return_value = audio_stream
     # When
     with pytest.raises(SystemExit):
+        # Given
+        target = "/target"
         cli.ffmpeg_process(youtube, "XYZp", target)
     # Then
     _ffmpeg_downloader.assert_not_called()
@@ -428,8 +428,6 @@ def test_ffmpeg_process_audio_none_should_fallback_download(
 def test_ffmpeg_process_audio_fallback_none_should_exit(
     _ffmpeg_downloader, youtube
 ):
-    # Given
-    target = "/target"
     streams = MagicMock()
     youtube.streams = streams
     stream = MagicMock()
@@ -441,6 +439,8 @@ def test_ffmpeg_process_audio_fallback_none_should_exit(
     streams.get_audio_only.return_value = None
     # When
     with pytest.raises(SystemExit):
+        # Given
+        target = "/target"
         cli.ffmpeg_process(youtube, "best", target)
     # Then
     _ffmpeg_downloader.assert_not_called()
