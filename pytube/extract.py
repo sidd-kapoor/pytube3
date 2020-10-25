@@ -54,13 +54,14 @@ def is_age_restricted(watch_html: str) -> bool:
     :rtype: bool
     :returns:
         Whether or not the content is age restricted.
-    """
+    
     try:
         regex_search(r"og:restrictions:age", watch_html, group=0)
     except RegexMatchError:
         return False
     return True
-
+    """
+    return False
 
 def video_id(url: str) -> str:
     """Extract the ``video_id`` from a YouTube url.
